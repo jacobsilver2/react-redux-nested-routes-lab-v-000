@@ -7,17 +7,31 @@ import PetsShow from './PetsShow';
 import PetsList from '../components/PetsList';
 
 class PetsPage extends Component {
-
   componentDidMount() {
-    this.props.fetchPets();
+    this.props.fetchPets;
   }
 
   render() {
-    return (
-      <div>Pets Page</div>
+    const {match, pets} = this.props;
+
+    return(
+      <div>
+        <PetsList pets={pets} />
+        <Switch>
+          <Route path={`${match.url}/new`} component={PetsNew}/>
+          <Route path={`${match.url}/:petId`} component={PetsShow}/>
+          <Route exact path={`${match.url}`} render={()=> (
+            <h2>Please enter a pet from the list</h2>
+          )}/>
+        </Switch>
+      
+      
+      </div>
     )
   }
-};
+}
+  
+
 
 const mapStateToProps = state => {
   return {
